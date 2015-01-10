@@ -55,25 +55,26 @@ namespace Flashtica
             if (deviceID != null) return deviceID;
             else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
         }
-        
+                                     
+             
         private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
-            var mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
-                {
-                StreamingCaptureMode = StreamingCaptureMode.Video,
-                PhotoCaptureSource = PhotoCaptureSource.VideoPreview,
-                AudioDeviceId = String.Empty,
-                VideoDeviceId = cameraID.Id
-                });
-            var videoDev = mediaDev.VideoDeviceController;
-            var tc = videoDev.TorchControl;
-            if (tc.Supported)
-            {
-                tc.Enabled = true;
-            }
-            
-        }
+       {
+           var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
+           var mediaDev = new MediaCapture();
+           await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
+           {
+               StreamingCaptureMode = StreamingCaptureMode.Video,
+               PhotoCaptureSource = PhotoCaptureSource.VideoPreview,
+               AudioDeviceId = String.Empty,
+               VideoDeviceId = cameraID.Id
+           });
+           var videoDev = mediaDev.VideoDeviceController;
+           var tc = videoDev.TorchControl;
+           if (tc.Supported)
+           {
+               tc.Enabled = true;
+           }
+       }
+        
     }
 }
