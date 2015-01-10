@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Capture;
@@ -46,18 +48,32 @@ namespace Flashtica
             // this event is handled for you.
         }
 
+        private static async Task<DeviceInformation> GetCameraID(Windows.Devices.Enumeration.Panel desiredCamera)
+        {
+            DeviceInformation deviceID = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture))
+                .FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == desiredCamera);
+            if (deviceID != null) return deviceID;
+            else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
+        }
+        
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
             var mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync();
+            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
+                {
+                StreamingCaptureMode = StreamingCaptureMode.Video,
+                PhotoCaptureSource = PhotoCaptureSource.VideoPreview,
+                AudioDeviceId = String.Empty,
+                VideoDeviceId = cameraID.Id
+                });
             var videoDev = mediaDev.VideoDeviceController;
             var tc = videoDev.TorchControl;
             if (tc.Supported)
             {
-                if (tc.PowerSupported)
-                    tc.PowerPercent = 100;
                 tc.Enabled = true;
             }
+            
         }
     }
 }
