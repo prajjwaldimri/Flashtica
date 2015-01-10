@@ -19,6 +19,10 @@
                 BorderThickness="0">
             <Image Source="Assets/Power button Blue.jpg"/>
         </Button>
+        <!-- Title Panel -->
+        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+            <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            </StackPanel>
       </Grid>
 
 </Page>
