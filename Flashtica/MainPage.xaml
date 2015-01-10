@@ -7,16 +7,16 @@
     xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
     x:Class="Flashtica.MainPage"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Dark">
     <Grid>
         <Button 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
                 Click="Button_Click" 
-                Margin="90,410,0,0" 
                 Height="230"
                 Width="206" 
-            BorderThickness="0">
+                BorderThickness="0">
             <Image Source="Assets/Power button Blue.jpg"/>
         </Button>
       </Grid>
