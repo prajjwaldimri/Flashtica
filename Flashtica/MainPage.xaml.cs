@@ -127,10 +127,10 @@ namespace Flashtica
            });
            var videoDev = mediaDev.VideoDeviceController;
            var tc = videoDev.TorchControl;
-           if (tc.Supported)         
+           if (tc.Supported)
+           {
                tc.Enabled = true;
-           mediaDev.Dispose();          
+           }      
        }
-        
-    }
+   }
 }

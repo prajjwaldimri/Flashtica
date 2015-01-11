@@ -106,6 +106,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BadgeLogo.scale-240.png" />
+    <Content Include="Assets\Flash-On-256.png" />
+    <Content Include="Assets\Flashtica Splash.scale-140.png" />
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\Power button Blue.jpg" />
     <Content Include="Assets\SmallLogo.scale-240.png" />

@@ -24,12 +24,34 @@
 
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="about" Margin="0,-6.5,0,26.5" Style="{ThemeResource SubheaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontFamily="Segoe WP SemiLight"/>
+            <TextBlock Text="FLASHTICA" 
+                       Style="{ThemeResource TitleTextBlockStyle}" 
+                       Margin="0,12,0,0"/>
+            <TextBlock Text="about" 
+                       Margin="0,-6.5,0,26.5" 
+                       Style="{ThemeResource SubheaderTextBlockStyle}" 
+                       CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontFamily="Segoe WP SemiLight"/>
         </StackPanel>
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+
+            <Image HorizontalAlignment="Center"
+                   Height="100"
+                   VerticalAlignment="Top"
+                   Width="100"
+                   Source="Assets/Flash-On-256.png"/>
+            <RichTextBlock HorizontalAlignment="Left" 
+                           Height="100" 
+                           VerticalAlignment="Top" 
+                           Width="342" 
+                           Margin="10,90,0,0"
+                           FontSize="16"
+                           FontFamily="Segoe UI">
+                <Paragraph>
+                    <Run Text="Flashtica is a blazing fast Flashlight especially designed for Windows Phone 8.1"/>
+                </Paragraph>
+            </RichTextBlock>
 
         </Grid>
     </Grid>
