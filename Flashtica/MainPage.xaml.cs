@@ -34,6 +34,8 @@ namespace Flashtica
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            var displayRequest = new Windows.System.Display.DisplayRequest();
+            displayRequest.RequestActive();
         }
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
