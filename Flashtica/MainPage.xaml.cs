@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Phone.Devices.Power;
 #endregion
 
 namespace Flashtica
@@ -34,8 +35,7 @@ namespace Flashtica
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            var displayRequest = new Windows.System.Display.DisplayRequest();
-            displayRequest.RequestActive();
+            
         }
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -115,6 +115,7 @@ namespace Flashtica
             else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
         }
 
+        
 
         async private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -133,6 +134,27 @@ namespace Flashtica
             {
                 tc.Enabled = true;
             }
+            if (tc.PowerSupported)
+            {
+                tc.PowerPercent = 100;
+            }
+       }
+        
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+                       
         }
+
+        
+
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            var displayRequest = new Windows.System.Display.DisplayRequest();
+            displayRequest.RequestActive();
+            
+        }
+
+
+        
     }
 }

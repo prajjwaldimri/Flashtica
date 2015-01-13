@@ -12,12 +12,13 @@
     <Grid>
         <Button 
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Bottom" 
+                VerticalAlignment="Center" 
                 Click="Button_Click" 
                 Height="230"
                 Width="206" 
+            Margin="0,200,0,0"
                 BorderThickness="0">
-            
+
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background"
@@ -30,7 +31,7 @@
                             Value="{StaticResource PhoneBorderThickness}" />
                     <Setter Property="FontFamily"
                             Value="{StaticResource PhoneFontFamilySemiBold}" />
-                      <Setter Property="Padding"
+                    <Setter Property="Padding"
                             Value="10,5,10,6" />
                     <Setter Property="Template">
                         <Setter.Value>
@@ -55,7 +56,7 @@
                                                     </ObjectAnimationUsingKeyFrames>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background"
                                                                                    Storyboard.TargetName="ButtonBackground">
-                                                         </ObjectAnimationUsingKeyFrames>
+                                                    </ObjectAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>
                                             <VisualState x:Name="Disabled">
@@ -115,7 +116,29 @@
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            </StackPanel>
-      </Grid>
+        </StackPanel>
+        <Slider HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Width="100" 
+                Margin="0,0,0,30" 
+                ValueChanged="Slider_ValueChanged">
+            
+        </Slider>
+        <ToggleSwitch Header="Disable Screen Lock" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center" 
+                      IsOn="False"
+                      Margin="0,-100,0,0" Toggled="ToggleSwitch_Toggled"/>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="About" />
+                <AppBarButton Label="Share" />
+                <AppBarButton Label="Rate+review"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 
 </Page>
