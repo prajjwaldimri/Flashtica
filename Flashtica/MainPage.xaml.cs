@@ -127,7 +127,7 @@ namespace Flashtica
         {
             var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
             mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings()
+            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
             {
                 VideoDeviceId = cameraID.Id
             });
@@ -188,12 +188,18 @@ namespace Flashtica
         }
 
         
-
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             var displayRequest = new Windows.System.Display.DisplayRequest();
-            displayRequest.RequestActive();
-            
+            if ((sender as ToggleSwitch).IsOn)
+            {
+                displayRequest.RequestActive();
+            }
+            else
+            {
+                displayRequest.RequestRelease();
+            }
+
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
