@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="34691PrajjwalDimri.FlashticaBeta" Publisher="CN=883EF119-9F3F-4348-A873-0DBB7FD085E0" Version="1.1.0.3" />
-  <mp:PhoneIdentity PhoneProductId="5c65ea5c-884d-4da8-ba73-5d72f8ee730a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="5c6d6fe8-4c40-4d45-b877-cc1ce64d2e74" Publisher="CN=Prajjwal" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="5c6d6fe8-4c40-4d45-b877-cc1ce64d2e74" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Flashtica Beta</DisplayName>
-    <PublisherDisplayName>Prajjwal Dimri</PublisherDisplayName>
+    <DisplayName>Flashtica</DisplayName>
+    <PublisherDisplayName>Prajjwal</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
