@@ -134,9 +134,9 @@
         <CommandBar ClosedDisplayMode="Minimal">
             
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="About" />
+                <AppBarButton Label="About" Click="AppBarButton_Click" />
                 <AppBarButton Label="Share" />
-                <AppBarButton Label="Rate+review"/>
+                <AppBarButton Label="Rate+review" Click="AppBarButton_Click_1"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

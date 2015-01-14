@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Phone.Devices.Power;
+using Windows.System;
 #endregion
 
 namespace Flashtica
@@ -152,6 +153,16 @@ namespace Flashtica
             var displayRequest = new Windows.System.Display.DisplayRequest();
             displayRequest.RequestActive();
             
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(About));
+        }
+
+        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp"));
         }
 
 
