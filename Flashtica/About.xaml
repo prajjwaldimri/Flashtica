@@ -53,8 +53,8 @@
                 </Paragraph>
             </RichTextBlock>
 
-            <HyperlinkButton HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="HyperlinkButton_Click">
-                <Image Source="Assets/appbar.at.png" Height="50" Margin="90,0,0,0" />
+            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="HyperlinkButton_Click">
+                <Image Source="Assets/appbar.at.png" Height="50" Margin="-120,0,0,0" />
             </HyperlinkButton>
 
             <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.github.com/prajjwaldimri/Flashtica">
@@ -65,8 +65,8 @@
                 <Image Source="Assets/appbar.social.reddit.png" Height="50" Margin="45,0,0,0" />
             </HyperlinkButton>
 
-            <HyperlinkButton HorizontalAlignment="Right" VerticalAlignment="Bottom" NavigateUri="https://www.twitter.com/flashtica">
-                <Image Source="Assets/appbar.social.twitter.png" Height="50" Margin="0,0,90,0" />
+            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.twitter.com/flashtica">
+                <Image Source="Assets/appbar.social.twitter.png" Height="50" Margin="120,0,0,0" />
             </HyperlinkButton>         
         
         

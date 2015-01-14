@@ -117,18 +117,12 @@
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
         </StackPanel>
-        <Slider HorizontalAlignment="Center" 
-                VerticalAlignment="Bottom" 
-                Width="100" 
-                Margin="0,0,0,30" 
-                ValueChanged="Slider_ValueChanged">
-            
-        </Slider>
+        
         <ToggleSwitch Header="Disable Screen Lock" 
                       HorizontalAlignment="Center" 
-                      VerticalAlignment="Center" 
+                      VerticalAlignment="Bottom" 
                       IsOn="False"
-                      Margin="0,-100,0,0" Toggled="ToggleSwitch_Toggled"/>
+                      Margin="0,0,0,30" Toggled="ToggleSwitch_Toggled"/>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
