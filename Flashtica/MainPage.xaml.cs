@@ -19,6 +19,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Phone.Devices.Power;
 using Windows.System;
+using Windows.Media.Devices;
+using Windows.ApplicationModel;
 #endregion
 
 namespace Flashtica
@@ -116,30 +118,52 @@ namespace Flashtica
             else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
         }
 
-        
+        bool isOn = false;
+        MediaCapture mediaDev;
+        TorchControl tc;
 
-        async private void Button_Click(object sender, RoutedEventArgs e)
+        private async Task<bool> ini()
         {
             var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
-            var mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
+            mediaDev = new MediaCapture();
+            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings()
             {
-                StreamingCaptureMode = StreamingCaptureMode.Video,
-                PhotoCaptureSource = PhotoCaptureSource.VideoPreview,
-                AudioDeviceId = String.Empty,
                 VideoDeviceId = cameraID.Id
             });
             var videoDev = mediaDev.VideoDeviceController;
-            var tc = videoDev.TorchControl;
+            tc = videoDev.TorchControl;
+
+            return true;
+        }
+
+        async private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Flashlight ist off - start initialize
+            if (!isOn)
+            {
+                await ini();
+            }
+
+            // Is tc is supported on the current Device, enable Flashlight
             if (tc.Supported)
             {
-                tc.Enabled = true;
+                if (tc.PowerSupported)
+                    tc.PowerPercent = 100;
+
+                if (tc.Enabled)
+                {
+                    tc.Enabled = false;
+                    // Dispose MediaCapture
+                    mediaDev.Dispose();
+                    isOn = false;
+                }
+                else
+                {
+                    tc.Enabled = true;
+                    isOn = true;
+                }
             }
-            if (tc.PowerSupported)
-            {
-                tc.PowerPercent = 100;
-            }
-       }
+        }
         
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
@@ -165,7 +189,7 @@ namespace Flashtica
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp"));
         }
 
-
+        
         
     }
 }
