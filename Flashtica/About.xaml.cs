@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel;
+using Windows.System;
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Flashtica
@@ -107,6 +108,11 @@ namespace Flashtica
         }
 
         #endregion
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri("mailto:flashtica@outlook.com"));
+        }
         
     }
 }

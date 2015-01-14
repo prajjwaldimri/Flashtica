@@ -33,7 +33,7 @@
                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontFamily="Segoe WP SemiLight"/>
         </StackPanel>
 
-        
+
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
 
             <Image HorizontalAlignment="Center"
@@ -49,12 +49,27 @@
                            FontSize="16"
                            FontFamily="Segoe UI">
                 <Paragraph>
-                    <Run Text="Flashtica is a blazing fast Flashlight especially designed for Windows Phone 8.1"/>
+                    <Run Text="Flashtica is a blazing fast Flashlight built from the scratch for Windows Phone 8.1"/>
                 </Paragraph>
             </RichTextBlock>
 
-        </Grid>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Margin="19,166,0,0" Grid.Row="1"/>
+            <HyperlinkButton HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="HyperlinkButton_Click">
+                <Image Source="Assets/appbar.at.png" Height="50" Margin="90,0,0,0" />
+            </HyperlinkButton>
+
+            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.github.com/prajjwaldimri/Flashtica">
+                <Image Source="Assets/appbar.social.github.octocat.png" Height="50" Margin="-40,0,0,0" />
+            </HyperlinkButton>
+
+            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.reddit.com/r/Flashtica">
+                <Image Source="Assets/appbar.social.reddit.png" Height="50" Margin="45,0,0,0" />
+            </HyperlinkButton>
+
+            <HyperlinkButton HorizontalAlignment="Right" VerticalAlignment="Bottom" NavigateUri="https://www.twitter.com/flashtica">
+                <Image Source="Assets/appbar.social.twitter.png" Height="50" Margin="0,0,90,0" />
+            </HyperlinkButton>         
+        
+        
+        </Grid>  
     </Grid>
-    
 </Page>

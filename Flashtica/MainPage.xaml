@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     RequestedTheme="Dark">
     <Grid>
-        <Button 
+        <Button x:Name="FlashButton" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Click="Button_Click" 
@@ -135,10 +135,12 @@
             
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="About" Click="AppBarButton_Click" />
-                <AppBarButton Label="Share" />
+                <AppBarButton Label="Support" Click="AppBarButton_Click_2" />
                 <AppBarButton Label="Rate+review" Click="AppBarButton_Click_1"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
+    
+    
 
 </Page>
