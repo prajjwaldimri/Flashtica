@@ -22,6 +22,7 @@ using Windows.System;
 using Windows.Media.Devices;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.System.Display;
 #endregion
 
 namespace Flashtica
@@ -136,22 +137,8 @@ namespace Flashtica
 
             return true;
         }
-        //private void ButtonImage(object sender, RoutedEventArgs e)
-        //{
-        //    var brush2 = new ImageBrush();
-        //    brush2.ImageSource = new BitmapImage(new Uri(@"Assets/Power button Blue - Copy.jpg", UriKind.Relative));
-
-        //    var brush = new ImageBrush();
-        //    brush.ImageSource = new BitmapImage(new Uri(@"Assets/Power button Blue.jpg", UriKind.Relative));
-
-        //    if (tc.Enabled)
-        //        FlashButton.Background = brush2;
-        //    else
-        //        FlashButton.Background = brush;
-
-        //}
-
-        async private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             FlashButton.IsHitTestVisible = false;
             // Flashlight is off - start initialize
@@ -181,16 +168,12 @@ namespace Flashtica
                 }
             }
         }
-        
-        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-                       
-        }
 
-        
+
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            var displayRequest = new Windows.System.Display.DisplayRequest();
+
+            var displayRequest = new DisplayRequest();
             if ((sender as ToggleSwitch).IsOn)
             {
                 displayRequest.RequestActive();
@@ -207,7 +190,7 @@ namespace Flashtica
             this.Frame.Navigate(typeof(About));
         }
 
-        private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
             Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp"));
         }
@@ -216,8 +199,6 @@ namespace Flashtica
         {
             Launcher.LaunchUriAsync(new Uri("mailto:flashtica@outlook.com"));
         }
-
-        
-        
+                        
     }
 }
