@@ -36,10 +36,12 @@ namespace Flashtica
         public MainPage()
         {
             this.InitializeComponent();
-
+            BatteryPercentText.Text = Battery.GetDefault().RemainingChargePercent.ToString() + "%";
+            BatteryRemainingText.Text = Battery.GetDefault().RemainingDischargeTime.TotalMinutes.ToString() + "minutes";
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
             
         }
         /// <summary>
@@ -124,6 +126,7 @@ namespace Flashtica
         MediaCapture mediaDev;
         TorchControl tc;
         private DisplayRequest _displayRequest;
+        Battery mybattery;
 
         private async Task<bool> ini()
         {
@@ -199,6 +202,12 @@ namespace Flashtica
         {
             Launcher.LaunchUriAsync(new Uri("mailto:flashtica@outlook.com"));
         }
-                        
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TorchPage));
+        }
+
+        
     }
 }
