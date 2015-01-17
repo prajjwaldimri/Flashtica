@@ -123,6 +123,7 @@ namespace Flashtica
         bool isOn = false;
         MediaCapture mediaDev;
         TorchControl tc;
+        private DisplayRequest _displayRequest;
 
         private async Task<bool> ini()
         {
@@ -172,15 +173,15 @@ namespace Flashtica
 
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-
-            var displayRequest = new DisplayRequest();
+            if (_displayRequest == null)
+                _displayRequest = new DisplayRequest();
             if ((sender as ToggleSwitch).IsOn)
             {
-                displayRequest.RequestActive();
+                _displayRequest.RequestActive();
             }
             else
             {
-                displayRequest.RequestRelease();
+                _displayRequest.RequestRelease();
             }
 
         }
