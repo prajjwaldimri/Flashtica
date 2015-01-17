@@ -49,7 +49,7 @@
                            FontSize="16"
                            FontFamily="Segoe UI">
                 <Paragraph>
-                    <Run Text="Flashtica is a blazing fast Flashlight built from the scratch for Windows Phone 8.1"/>
+                    <Run Text="Flashtica is a blazing fast Flashlight app built from the scratch for `Windows Phone 8.1`"/>
                 </Paragraph>
             </RichTextBlock>
 

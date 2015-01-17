@@ -141,7 +141,6 @@ namespace Flashtica
         
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            FlashButton.IsHitTestVisible = false;
             // Flashlight is off - start initialize
             if (!isOn)
             {
