@@ -195,7 +195,7 @@ namespace Flashtica
 
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp"));
+            Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=596fba0f-9af0-4d03-98ba-67502a2b27d2"));
         }
 
         private void AppBarButton_Click_2(object sender, RoutedEventArgs e)
