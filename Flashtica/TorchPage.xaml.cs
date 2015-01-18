@@ -1,15 +1,11 @@
-﻿#region Namespace Declaration
-using Flashtica.Common;
+﻿using Flashtica.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Media.Capture;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,27 +13,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Phone.Devices.Power;
-using Windows.System;
-using Windows.Media.Devices;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.System.Display;
-#endregion
+
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Flashtica
 {
-    public sealed partial class MainPage : Page
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class TorchPage : Page
     {
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public MainPage()
+        public TorchPage()
         {
             this.InitializeComponent();
-            BatteryPercentText.Text = Battery.GetDefault().RemainingChargePercent.ToString() + "%";
-            BatteryRemainingText.Text = Battery.GetDefault().RemainingDischargeTime.TotalMinutes.ToString() + "minutes";
+            
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
@@ -113,101 +106,5 @@ namespace Flashtica
         }
 
         #endregion
-
-        private static async Task<DeviceInformation> GetCameraID(Windows.Devices.Enumeration.Panel desiredCamera)
-        {
-            DeviceInformation deviceID = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture))
-                .FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == desiredCamera);
-            if (deviceID != null) return deviceID;
-            else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
-        }
-
-        bool isOn = false;
-        MediaCapture mediaDev;
-        TorchControl tc;
-        private DisplayRequest _displayRequest;
-        Battery mybattery;
-
-        private async Task<bool> ini()
-        {
-            var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
-            mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
-            {
-                VideoDeviceId = cameraID.Id
-            });
-            var videoDev = mediaDev.VideoDeviceController;
-            tc = videoDev.TorchControl;
-
-            return true;
-        }
-        
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Flashlight is off - start initialize
-            if (!isOn)
-            {
-                await ini();
-
-            }
-
-            // Is tc is supported on the current Device, enable Flashlight
-            if (tc.Supported)
-            {
-                if (tc.PowerSupported)
-                    tc.PowerPercent = 100;
-
-                if (tc.Enabled)
-                {
-                    tc.Enabled = false;
-                    // Dispose MediaCapture
-                    mediaDev.Dispose();
-                    isOn = false;
-                }
-                else
-                {
-                    tc.Enabled = true;
-                    isOn = true;
-                }
-            }
-        }
-
-
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (_displayRequest == null)
-                _displayRequest = new DisplayRequest();
-            if ((sender as ToggleSwitch).IsOn)
-            {
-                _displayRequest.RequestActive();
-            }
-            else
-            {
-                _displayRequest.RequestRelease();
-            }
-
-        }
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(About));
-        }
-
-        private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp"));
-        }
-
-        private void AppBarButton_Click_2(object sender, RoutedEventArgs e)
-        {
-            Launcher.LaunchUriAsync(new Uri("mailto:flashtica@outlook.com"));
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(TorchPage));
-        }
-
-        
     }
 }
