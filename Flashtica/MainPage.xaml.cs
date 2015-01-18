@@ -37,7 +37,7 @@ namespace Flashtica
         {
             this.InitializeComponent();
             BatteryPercentText.Text = Battery.GetDefault().RemainingChargePercent.ToString() + "%";
-            BatteryRemainingText.Text = Battery.GetDefault().RemainingDischargeTime.TotalMinutes.ToString() + "minutes";
+            
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;

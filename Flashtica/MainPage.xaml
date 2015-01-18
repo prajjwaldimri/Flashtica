@@ -117,16 +117,13 @@
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock x:Name="BatteryPercentText" 
-                       Margin="0,100,260,0" 
+                       Margin="0,350,300,0" 
                        FontSize="20" 
                        HorizontalAlignment="Center"/>
-            <TextBlock x:Name="BatteryRemainingText"  
-                       Margin="0,-25,0,0" 
-                       FontSize="20" 
-                       HorizontalAlignment="Center"/>
+            
                </StackPanel>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
-                Margin="0,0,0,110" Click="Button_Click_1" Width="50" BorderThickness="0,0,0,0">
+                Margin="330,290,0,110" Click="Button_Click_1" Width="50" BorderThickness="0,0,0,0">
             <Image Source="Assets/appbar.windowsphone.png"/>
         </Button>
 
