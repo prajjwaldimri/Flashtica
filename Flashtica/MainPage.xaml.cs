@@ -23,6 +23,8 @@ using Windows.Media.Devices;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System.Display;
+using Windows.Storage;
+using Windows.Media.SpeechRecognition;
 #endregion
 
 namespace Flashtica
@@ -102,9 +104,14 @@ namespace Flashtica
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommandDefinition1.xml"));
+                await Windows.Media.SpeechRecognition.VoiceCommandManager.InstallCommandSetsFromStorageFileAsync(storageFile);
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
