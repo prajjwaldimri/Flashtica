@@ -13,6 +13,13 @@
       <Navigate Target="MainPage.xaml" />
     </Command>
 
+     <Command Name="WhiteScreen">
+      <Example> Open WhiteScreen </Example>
+      <ListenFor> Open White Screen </ListenFor>
+      <ListenFor> White Screen </ListenFor>
+      <Feedback> Opening White Screen Mode </Feedback>
+      <Navigate Target="TorchPage.xaml" />
+    </Command>
     	
   </CommandSet>
 </VoiceCommands>

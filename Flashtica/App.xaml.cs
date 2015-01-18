@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BugSense;
+using BugSense.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,6 +37,8 @@ namespace Flashtica
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            // Initialize BugSense
+           BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(Current), "4c171c01");
         }
 
         /// <summary>
