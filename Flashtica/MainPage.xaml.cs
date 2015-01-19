@@ -38,7 +38,7 @@ namespace Flashtica
         public MainPage()
         {
             this.InitializeComponent();
-            BatteryPercentText.Text = Battery.GetDefault().RemainingChargePercent.ToString() + "%";
+            
             
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -120,7 +120,6 @@ namespace Flashtica
         }
 
         #endregion
-
         private static async Task<DeviceInformation> GetCameraID(Windows.Devices.Enumeration.Panel desiredCamera)
         {
             DeviceInformation deviceID = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture))
@@ -133,8 +132,7 @@ namespace Flashtica
         MediaCapture mediaDev;
         TorchControl tc;
         private DisplayRequest _displayRequest;
-        Battery mybattery;
-
+        
         private async Task<bool> ini()
         {
             var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
@@ -159,10 +157,10 @@ namespace Flashtica
             }
 
             // Is tc is supported on the current Device, enable Flashlight
-            if (tc.Supported)
-            {
-                if (tc.PowerSupported)
-                    tc.PowerPercent = 100;
+            //if (tc.Supported)
+            //{
+            //    if (tc.PowerSupported)
+            //        tc.PowerPercent = 100;
 
                 if (tc.Enabled)
                 {
@@ -176,7 +174,7 @@ namespace Flashtica
                     tc.Enabled = true;
                     isOn = true;
                 }
-            }
+            //}
         }
 
 
@@ -215,6 +213,20 @@ namespace Flashtica
             this.Frame.Navigate(typeof(TorchPage));
         }
 
-        
+        //private void MyButtonProperties(object sender, RoutedEventArgs e)
+        //{
+        //    var buttonoff = new ImageBrush();
+        //    buttonoff.ImageSource = new BitmapImage(new Uri("ms-appx:/Assets/Flashtica Button Off.png", UriKind.Relative));
+        //    ImageBrush buttonon = new ImageBrush();
+        //    buttonon.ImageSource = new BitmapImage(new Uri("ms-appx:/Assets/Flashtica Button.png", UriKind.Relative));
+        //    if (tc.Enabled)
+        //    {
+        //        FlashButton.Background = buttonon;
+        //    }
+        //    else
+        //    {
+        //        FlashButton.Background = buttonoff;
+        //    }
+        //}
     }
 }

@@ -12,14 +12,15 @@
     <Grid>
         <Button x:Name="FlashButton" 
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+                VerticalAlignment="Top"
                 Click="Button_Click" 
                 Height="230"
                 Width="206" 
-            Margin="0,200,0,0"
-                BorderThickness="0">
-
-            <Button.Style>
+                Margin="0,200,0,0"
+                BorderThickness="0"
+                >
+            <Image Source="Assets/Flashtica Button.png"></Image>
+            <!--<Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background"
                             Value="Transparent" />
@@ -45,7 +46,7 @@
                                                 <Storyboard>
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Source"
                                                                                    Storyboard.TargetName="Img">
-                                                        <!-- Pressed Image. -->
+                                                        --><!-- Pressed Image. --><!--
                                                         <DiscreteObjectKeyFrame KeyTime="0"
                                                                                 Value="Assets/Power button Blue.jpg" />
                                                     </ObjectAnimationUsingKeyFrames>
@@ -90,8 +91,8 @@
 
                                         <StackPanel Orientation="Horizontal">
 
-                                            <!-- Added Image to the Button Template. Specify image that you 
-                                            want to show when button is in normal state.  -->
+                                            --><!-- Added Image to the Button Template. Specify image that you 
+                                            want to show when button is in normal state.  --><!--
                                             <Image x:Name="Img"
                                                    Source="Assets/Power button Blue - Copy.jpg"
                                                     />
@@ -111,16 +112,12 @@
                         </Setter.Value>
                     </Setter>
                 </Style>
-            </Button.Style>
+            </Button.Style>-->
         </Button>
         <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+        <StackPanel Grid.Row="0" Margin="19,20,0,-2">
             <TextBlock Text="FLASHTICA" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock x:Name="BatteryPercentText" 
-                       Margin="0,350,300,0" 
-                       FontSize="20" 
-                       HorizontalAlignment="Center"/>
-            
+                       
                </StackPanel>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                 Margin="330,290,0,110" Click="Button_Click_1" Width="50" BorderThickness="0,0,0,0">
