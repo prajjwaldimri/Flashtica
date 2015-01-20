@@ -21,7 +21,7 @@ using Panel = Windows.Devices.Enumeration.Panel;
 
 namespace Flashtica
 {
-    public sealed partial class MainPage : Page
+    public abstract sealed partial class MainPage : Page
     {
 
         private readonly NavigationHelper _navigationHelper;
@@ -124,6 +124,7 @@ namespace Flashtica
         MediaCapture _mediaDev;
         TorchControl _tc;
         private DisplayRequest _displayRequest;
+
         
         private async Task<bool> Ini()
         {
@@ -174,11 +175,12 @@ namespace Flashtica
                     var videoEncodingProperties = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Vga);
 
                     // Start Video Recording
-                    var videoStorageFile = await KnownFolders.VideosLibrary
+                    var videoStorageFile = await ApplicationData.Current.TemporaryFolder
                         .CreateFileAsync("tempVideo.mp4", CreationCollisionOption.GenerateUniqueName);
                     await _mediaDev.StartRecordToStorageFileAsync(videoEncodingProperties, videoStorageFile);
                     _tc.Enabled = true;
-                    _isOn = true;
+                    _isOn = true; 
+                    
                 }
             }
         }
