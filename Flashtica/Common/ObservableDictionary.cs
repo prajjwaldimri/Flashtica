@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation.Collections;
@@ -15,8 +15,8 @@ namespace Flashtica.Common
         {
             public ObservableDictionaryChangedEventArgs(CollectionChange change, string key)
             {
-                this.CollectionChange = change;
-                this.Key = key;
+                CollectionChange = change;
+                Key = key;
             }
 
             public CollectionChange CollectionChange { get; private set; }
@@ -37,20 +37,20 @@ namespace Flashtica.Common
 
         public void Add(string key, object value)
         {
-            this._dictionary.Add(key, value);
-            this.InvokeMapChanged(CollectionChange.ItemInserted, key);
+            _dictionary.Add(key, value);
+            InvokeMapChanged(CollectionChange.ItemInserted, key);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            this.Add(item.Key, item.Value);
+            Add(item.Key, item.Value);
         }
 
         public bool Remove(string key)
         {
-            if (this._dictionary.Remove(key))
+            if (_dictionary.Remove(key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
                 return true;
             }
             return false;
@@ -59,10 +59,10 @@ namespace Flashtica.Common
         public bool Remove(KeyValuePair<string, object> item)
         {
             object currentValue;
-            if (this._dictionary.TryGetValue(item.Key, out currentValue) &&
-                Object.Equals(item.Value, currentValue) && this._dictionary.Remove(item.Key))
+            if (_dictionary.TryGetValue(item.Key, out currentValue) &&
+                Equals(item.Value, currentValue) && _dictionary.Remove(item.Key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
                 return true;
             }
             return false;
@@ -72,53 +72,53 @@ namespace Flashtica.Common
         {
             get
             {
-                return this._dictionary[key];
+                return _dictionary[key];
             }
             set
             {
-                this._dictionary[key] = value;
-                this.InvokeMapChanged(CollectionChange.ItemChanged, key);
+                _dictionary[key] = value;
+                InvokeMapChanged(CollectionChange.ItemChanged, key);
             }
         }
 
         public void Clear()
         {
-            var priorKeys = this._dictionary.Keys.ToArray();
-            this._dictionary.Clear();
+            var priorKeys = _dictionary.Keys.ToArray();
+            _dictionary.Clear();
             foreach (var key in priorKeys)
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
             }
         }
 
         public ICollection<string> Keys
         {
-            get { return this._dictionary.Keys; }
+            get { return _dictionary.Keys; }
         }
 
         public bool ContainsKey(string key)
         {
-            return this._dictionary.ContainsKey(key);
+            return _dictionary.ContainsKey(key);
         }
 
         public bool TryGetValue(string key, out object value)
         {
-            return this._dictionary.TryGetValue(key, out value);
+            return _dictionary.TryGetValue(key, out value);
         }
 
         public ICollection<object> Values
         {
-            get { return this._dictionary.Values; }
+            get { return _dictionary.Values; }
         }
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            return this._dictionary.Contains(item);
+            return _dictionary.Contains(item);
         }
 
         public int Count
         {
-            get { return this._dictionary.Count; }
+            get { return _dictionary.Count; }
         }
 
         public bool IsReadOnly
@@ -128,18 +128,18 @@ namespace Flashtica.Common
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            return this._dictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._dictionary.GetEnumerator();
+            return _dictionary.GetEnumerator();
         }
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
             int arraySize = array.Length;
-            foreach (var pair in this._dictionary)
+            foreach (var pair in _dictionary)
             {
                 if (arrayIndex >= arraySize) break;
                 array[arrayIndex++] = pair;

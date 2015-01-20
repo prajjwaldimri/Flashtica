@@ -1,31 +1,22 @@
 ﻿#region Namespace Declaration
-using Flashtica.Common;
+
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Media.Capture;
+using Windows.Media.Devices;
+using Windows.Media.MediaProperties;
+using Windows.Media.SpeechRecognition;
+using Windows.Storage;
+using Windows.System;
+using Windows.System.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Phone.Devices.Power;
-using Windows.System;
-using Windows.Media.Devices;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.System.Display;
-using Windows.Storage;
-using Windows.Media.SpeechRecognition;
-using Windows.Media.MediaProperties;
+using Flashtica.Common;
+using Panel = Windows.Devices.Enumeration.Panel;
+
 #endregion
 
 namespace Flashtica
@@ -33,17 +24,17 @@ namespace Flashtica
     public sealed partial class MainPage : Page
     {
 
-        private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly NavigationHelper _navigationHelper;
+        private readonly ObservableDictionary _defaultViewModel = new ObservableDictionary();
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             
             
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            _navigationHelper = new NavigationHelper(this);
+            _navigationHelper.LoadState += NavigationHelper_LoadState;
+            _navigationHelper.SaveState += NavigationHelper_SaveState;
 
             
         }
@@ -52,7 +43,7 @@ namespace Flashtica
         /// </summary>
         public NavigationHelper NavigationHelper
         {
-            get { return this.navigationHelper; }
+            get { return _navigationHelper; }
         }
 
         /// <summary>
@@ -61,7 +52,7 @@ namespace Flashtica
         /// </summary>
         public ObservableDictionary DefaultViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return _defaultViewModel; }
         }
 
         /// <summary>
@@ -107,43 +98,43 @@ namespace Flashtica
         /// handlers that cannot cancel the navigation request.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedTo(e);
+            _navigationHelper.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New)
             {
-                var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommandDefinition1.xml"));
-                await Windows.Media.SpeechRecognition.VoiceCommandManager.InstallCommandSetsFromStorageFileAsync(storageFile);
+                var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommandDefinition1.xml"));
+                await VoiceCommandManager.InstallCommandSetsFromStorageFileAsync(storageFile);
             }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.navigationHelper.OnNavigatedFrom(e);
+            _navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
-        private static async Task<DeviceInformation> GetCameraID(Windows.Devices.Enumeration.Panel desiredCamera)
+        private static async Task<DeviceInformation> GetCameraId(Panel desiredCamera)
         {
-            DeviceInformation deviceID = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture))
+            var deviceId = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture))
                 .FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == desiredCamera);
-            if (deviceID != null) return deviceID;
-            else throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
+            if (deviceId != null) return deviceId;
+            throw new Exception(string.Format("Camera {0} doesn't exist", desiredCamera));
         }
 
-        bool isOn = false;
-        MediaCapture mediaDev;
-        TorchControl tc;
+        bool _isOn;
+        MediaCapture _mediaDev;
+        TorchControl _tc;
         private DisplayRequest _displayRequest;
         
-        private async Task<bool> ini()
+        private async Task<bool> Ini()
         {
-            var cameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);
-            mediaDev = new MediaCapture();
-            await mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
+            var cameraId = await GetCameraId(Panel.Back);
+            _mediaDev = new MediaCapture();
+            await _mediaDev.InitializeAsync(new MediaCaptureInitializationSettings
             {
-                VideoDeviceId = cameraID.Id
+                VideoDeviceId = cameraId.Id
             });
-            var videoDev = mediaDev.VideoDeviceController;
-            tc = videoDev.TorchControl;
+            var videoDev = _mediaDev.VideoDeviceController;
+            _tc = videoDev.TorchControl;
 
             return true;
         }
@@ -152,26 +143,27 @@ namespace Flashtica
         {
             
             // Flashlight is off - start initialize
-            if (!isOn)
+            if (!_isOn)
             {
-                await ini();
+                await Ini();
 
             }
 
              //Is tc is supported on the current Device, enable Flashlight
-            if (tc.Supported)
+            if (_tc.Supported)
             {
                 
                 
-                if (tc.PowerSupported)
-                    tc.PowerPercent = 100;
+                if (_tc.PowerSupported)
+                    _tc.PowerPercent = 100;
 
-                if (tc.Enabled)
+                if (_tc.Enabled)
                 {
-                    tc.Enabled = false;
+                    _tc.Enabled = false;
                     // Dispose MediaCapture
-                    mediaDev.Dispose();
-                    isOn = false;
+                    _mediaDev.Dispose();
+                    _isOn = false;
+                    
                     //await mediaDev.StopRecordAsync();
                     
                 }
@@ -184,9 +176,9 @@ namespace Flashtica
                     // Start Video Recording
                     var videoStorageFile = await KnownFolders.VideosLibrary
                         .CreateFileAsync("tempVideo.mp4", CreationCollisionOption.GenerateUniqueName);
-                    await mediaDev.StartRecordToStorageFileAsync(videoEncodingProperties, videoStorageFile);
-                    tc.Enabled = true;
-                    isOn = true;
+                    await _mediaDev.StartRecordToStorageFileAsync(videoEncodingProperties, videoStorageFile);
+                    _tc.Enabled = true;
+                    _isOn = true;
                 }
             }
         }
@@ -196,7 +188,8 @@ namespace Flashtica
         {
             if (_displayRequest == null)
                 _displayRequest = new DisplayRequest();
-            if ((sender as ToggleSwitch).IsOn)
+            var toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null && toggleSwitch.IsOn)
             {
                 _displayRequest.RequestActive();
             }
@@ -209,7 +202,7 @@ namespace Flashtica
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(About));
+            Frame.Navigate(typeof(About));
         }
 
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
@@ -224,7 +217,7 @@ namespace Flashtica
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(TorchPage));
+            Frame.Navigate(typeof(TorchPage));
         }
 
         //private void MyButtonProperties(object sender, RoutedEventArgs e)

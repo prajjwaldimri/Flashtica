@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.System;
-using Windows.UI.Core;
+using Windows.Foundation.Metadata;
+using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -56,11 +52,11 @@ namespace Flashtica.Common
     ///     }
     /// </code>
     /// </example>
-    [Windows.Foundation.Metadata.WebHostHidden]
+    [WebHostHidden]
     public class NavigationHelper : DependencyObject
     {
         private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        private Frame Frame { get { return Page.Frame; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
@@ -70,15 +66,15 @@ namespace Flashtica.Common
         /// navigation requests only occur when the page is occupying the entire window.</param>
         public NavigationHelper(Page page)
         {
-            this.Page = page;
+            Page = page;
 
             // When this page is part of the visual tree make two changes:
             // 1) Map application view state to visual state for the page
             // 2) Handle hardware navigation requests
-            this.Page.Loaded += (sender, e) =>
+            Page.Loaded += (sender, e) =>
             {
 #if WINDOWS_PHONE_APP
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+                HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 #else
                 // Keyboard and mouse navigation only apply when occupying the entire window
                 if (this.Page.ActualHeight == Window.Current.Bounds.Height &&
@@ -94,10 +90,10 @@ namespace Flashtica.Common
             };
 
             // Undo the same changes when the page is no longer visible
-            this.Page.Unloaded += (sender, e) =>
+            Page.Unloaded += (sender, e) =>
             {
 #if WINDOWS_PHONE_APP
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+                HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
 #else
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
                     CoreDispatcher_AcceleratorKeyActivated;
@@ -127,8 +123,8 @@ namespace Flashtica.Common
                 if (_goBackCommand == null)
                 {
                     _goBackCommand = new RelayCommand(
-                        () => this.GoBack(),
-                        () => this.CanGoBack());
+                        () => GoBack(),
+                        () => CanGoBack());
                 }
                 return _goBackCommand;
             }
@@ -151,8 +147,8 @@ namespace Flashtica.Common
                 if (_goForwardCommand == null)
                 {
                     _goForwardCommand = new RelayCommand(
-                        () => this.GoForward(),
-                        () => this.CanGoForward());
+                        () => GoForward(),
+                        () => CanGoForward());
                 }
                 return _goForwardCommand;
             }
@@ -168,7 +164,7 @@ namespace Flashtica.Common
         /// </returns>
         public virtual bool CanGoBack()
         {
-            return this.Frame != null && this.Frame.CanGoBack;
+            return Frame != null && Frame.CanGoBack;
         }
         /// <summary>
         /// Virtual method used by the <see cref="GoForwardCommand"/> property
@@ -180,7 +176,7 @@ namespace Flashtica.Common
         /// </returns>
         public virtual bool CanGoForward()
         {
-            return this.Frame != null && this.Frame.CanGoForward;
+            return Frame != null && Frame.CanGoForward;
         }
 
         /// <summary>
@@ -189,7 +185,7 @@ namespace Flashtica.Common
         /// </summary>
         public virtual void GoBack()
         {
-            if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
+            if (Frame != null && Frame.CanGoBack) Frame.GoBack();
         }
         /// <summary>
         /// Virtual method used by the <see cref="GoForwardCommand"/> property
@@ -197,7 +193,7 @@ namespace Flashtica.Common
         /// </summary>
         public virtual void GoForward()
         {
-            if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
+            if (Frame != null && Frame.CanGoForward) Frame.GoForward();
         }
 
 #if WINDOWS_PHONE_APP
@@ -206,12 +202,12 @@ namespace Flashtica.Common
         /// </summary>
         /// <param name="sender">Instance that triggered the event.</param>
         /// <param name="e">Event data describing the conditions that led to the event.</param>
-        private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
-            if (this.GoBackCommand.CanExecute(null))
+            if (GoBackCommand.CanExecute(null))
             {
                 e.Handled = true;
-                this.GoBackCommand.Execute(null);
+                GoBackCommand.Execute(null);
             }
         }
 #else
@@ -316,15 +312,15 @@ namespace Flashtica.Common
         /// property provides the group to be displayed.</param>
         public void OnNavigatedTo(NavigationEventArgs e)
         {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            this._pageKey = "Page-" + this.Frame.BackStackDepth;
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
+            _pageKey = "Page-" + Frame.BackStackDepth;
 
             if (e.NavigationMode == NavigationMode.New)
             {
                 // Clear existing state for forward navigation when adding a new page to the
                 // navigation stack
-                var nextPageKey = this._pageKey;
-                int nextPageIndex = this.Frame.BackStackDepth;
+                var nextPageKey = _pageKey;
+                int nextPageIndex = Frame.BackStackDepth;
                 while (frameState.Remove(nextPageKey))
                 {
                     nextPageIndex++;
@@ -332,9 +328,9 @@ namespace Flashtica.Common
                 }
 
                 // Pass the navigation parameter to the new page
-                if (this.LoadState != null)
+                if (LoadState != null)
                 {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, null));
+                    LoadState(this, new LoadStateEventArgs(e.Parameter, null));
                 }
             }
             else
@@ -342,9 +338,9 @@ namespace Flashtica.Common
                 // Pass the navigation parameter and preserved page state to the page, using
                 // the same strategy for loading suspended state and recreating pages discarded
                 // from cache
-                if (this.LoadState != null)
+                if (LoadState != null)
                 {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
+                    LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[_pageKey]));
                 }
             }
         }
@@ -358,11 +354,11 @@ namespace Flashtica.Common
         /// property provides the group to be displayed.</param>
         public void OnNavigatedFrom(NavigationEventArgs e)
         {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
             var pageState = new Dictionary<String, Object>();
-            if (this.SaveState != null)
+            if (SaveState != null)
             {
-                this.SaveState(this, new SaveStateEventArgs(pageState));
+                SaveState(this, new SaveStateEventArgs(pageState));
             }
             frameState[_pageKey] = pageState;
         }
@@ -407,10 +403,9 @@ namespace Flashtica.Common
         /// session.  This will be null the first time a page is visited.
         /// </param>
         public LoadStateEventArgs(Object navigationParameter, Dictionary<string, Object> pageState)
-            : base()
         {
-            this.NavigationParameter = navigationParameter;
-            this.PageState = pageState;
+            NavigationParameter = navigationParameter;
+            PageState = pageState;
         }
     }
     /// <summary>
@@ -428,9 +423,8 @@ namespace Flashtica.Common
         /// </summary>
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         public SaveStateEventArgs(Dictionary<string, Object> pageState)
-            : base()
         {
-            this.PageState = pageState;
+            PageState = pageState;
         }
     }
 }

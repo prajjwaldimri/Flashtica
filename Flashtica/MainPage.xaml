@@ -4,7 +4,7 @@
     xmlns:local="using:Flashtica"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:WindowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
+    xmlns:windowsPhone81="using:Microsoft.AdMediator.WindowsPhone81"
     x:Class="Flashtica.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
