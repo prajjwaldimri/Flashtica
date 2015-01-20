@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.System.Display;
 using Windows.Storage;
 using Windows.Media.SpeechRecognition;
+using Windows.Media.MediaProperties;
 #endregion
 
 namespace Flashtica
@@ -149,6 +150,7 @@ namespace Flashtica
         
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             // Flashlight is off - start initialize
             if (!isOn)
             {
@@ -156,11 +158,13 @@ namespace Flashtica
 
             }
 
-            // Is tc is supported on the current Device, enable Flashlight
-            //if (tc.Supported)
-            //{
-            //    if (tc.PowerSupported)
-            //        tc.PowerPercent = 100;
+             //Is tc is supported on the current Device, enable Flashlight
+            if (tc.Supported)
+            {
+                
+                
+                if (tc.PowerSupported)
+                    tc.PowerPercent = 100;
 
                 if (tc.Enabled)
                 {
@@ -168,13 +172,23 @@ namespace Flashtica
                     // Dispose MediaCapture
                     mediaDev.Dispose();
                     isOn = false;
+                    //await mediaDev.StopRecordAsync();
+                    
                 }
                 else
                 {
+                    // But wait, for this to work with Blue camera drivers, we have to Start a recording session
+                    // Create video encoding profile as MP4 
+                    var videoEncodingProperties = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Vga);
+
+                    // Start Video Recording
+                    var videoStorageFile = await KnownFolders.VideosLibrary
+                        .CreateFileAsync("tempVideo.mp4", CreationCollisionOption.GenerateUniqueName);
+                    await mediaDev.StartRecordToStorageFileAsync(videoEncodingProperties, videoStorageFile);
                     tc.Enabled = true;
                     isOn = true;
                 }
-            //}
+            }
         }
 
 
