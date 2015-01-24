@@ -8,68 +8,68 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     RequestedTheme="Dark">
+    
+    
+        
+        <!--Pivot Control-->
+        <Pivot Title="FLASHTICA">
+            <!--Pivot item one-->
+            <PivotItem Header="about">
+                <Grid Margin="19,9.5,19,0">
 
-    <Grid x:Name="LayoutRoot">
-
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition/>
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="FLASHTICA" 
-                       Style="{ThemeResource TitleTextBlockStyle}" 
-                       Margin="0,12,0,0"/>
-            <TextBlock Text="about" 
-                       Margin="0,-6.5,0,26.5" 
-                       Style="{ThemeResource SubheaderTextBlockStyle}" 
-                       CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontFamily="Segoe WP SemiLight"/>
-        </StackPanel>
-
-
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-
-            <Image HorizontalAlignment="Center"
+                    <Image HorizontalAlignment="Center"
                    Height="100"
                    VerticalAlignment="Top"
                    Width="100"
                    Source="Assets/Flash-On-256.png"/>
-            <RichTextBlock HorizontalAlignment="Left" 
+                    <RichTextBlock HorizontalAlignment="Left" 
                            Height="100" 
                            VerticalAlignment="Top" 
                            Width="342" 
                            Margin="10,90,0,0"
                            FontSize="16"
                            FontFamily="Segoe UI">
-                <Paragraph>
-                    <Run Text="Flashtica is a blazing fast Flashlight app built from the scratch for `Windows Phone 8.1`"/>
-                </Paragraph>
-            </RichTextBlock>
+                        <Paragraph>
+                            <Run Text="Flashtica is a blazing fast Flashlight app built from the scratch for `Windows Phone 8.1`"/>
+                        </Paragraph>
+                    </RichTextBlock>
 
-            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="HyperlinkButton_Click">
-                <Image Source="Assets/appbar.at.png" Height="50" Margin="-120,0,0,0" />
-            </HyperlinkButton>
+                    <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="HyperlinkButton_Click">
+                        <Image Source="Assets/appbar.at.png" Height="50" Margin="-120,0,0,0" />
+                    </HyperlinkButton>
 
-            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.github.com/prajjwaldimri/Flashtica">
-                <Image Source="Assets/appbar.social.github.octocat.png" Height="50" Margin="-40,0,0,0" />
-            </HyperlinkButton>
+                    <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.github.com/prajjwaldimri/Flashtica">
+                        <Image Source="Assets/appbar.social.github.octocat.png" Height="50" Margin="-40,0,0,0" />
+                    </HyperlinkButton>
 
-            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.reddit.com/r/Flashtica">
-                <Image Source="Assets/appbar.social.reddit.png" Height="50" Margin="45,0,0,0" />
-            </HyperlinkButton>
+                    <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.reddit.com/r/Flashtica">
+                        <Image Source="Assets/appbar.social.reddit.png" Height="50" Margin="45,0,0,0" />
+                    </HyperlinkButton>
 
-            <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.twitter.com/flashtica">
-                <Image Source="Assets/appbar.social.twitter.png" Height="50" Margin="120,0,0,0" />
-            </HyperlinkButton>         
-        
-        
-        </Grid>  
-    </Grid>
+                    <HyperlinkButton HorizontalAlignment="Center" VerticalAlignment="Bottom" NavigateUri="https://www.twitter.com/prajjwaldimri">
+                        <Image Source="Assets/appbar.social.twitter.png" Height="50" Margin="120,0,0,0" />
+                    </HyperlinkButton>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="faq">
+                <Grid>
+                <Image HorizontalAlignment="Center"
+                   Height="100"
+                   VerticalAlignment="Top"
+                   Width="100"
+                   Source="Assets/appbar.book.perspective.help.png"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" FontSize="19" TextWrapping="Wrap" TextAlignment="Justify">
+                    Q. Why does the app need Video Library access?<LineBreak/>
+                    Ans. For operating in some higher end phones I have to call video camera to operate flash. And this requires Video Library Access.<LineBreak/>
+                    <LineBreak/>
+                    Q. How is this app made?<LineBreak/>
+                    Ans. As the app is open source, the full source code is public on Github. Everyone can see how this app does what it does.<LineBreak/>
+                    <LineBreak/>
+                    Q. I have an idea for the app. How can I contact you?<LineBreak/>
+                    Ans. See the bottom of the about page. All contact options are listed there.<LineBreak/>
+                </TextBlock>
+                   </Grid>
+            </PivotItem>
+            </Pivot>
 </Page>

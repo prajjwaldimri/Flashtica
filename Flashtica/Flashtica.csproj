@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\appbar.at.png" />
+    <Content Include="Assets\appbar.book.perspective.help.png" />
     <Content Include="Assets\appbar.social.github.octocat.png" />
     <Content Include="Assets\appbar.social.reddit.png" />
     <Content Include="Assets\appbar.social.twitter.png" />

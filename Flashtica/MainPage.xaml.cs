@@ -21,7 +21,7 @@ using Panel = Windows.Devices.Enumeration.Panel;
 
 namespace Flashtica
 {
-    public abstract sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page
     {
 
         private readonly NavigationHelper _navigationHelper;
